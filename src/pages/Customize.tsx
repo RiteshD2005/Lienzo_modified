@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import ReactCrop, { Crop } from "react-image-crop";
-import { Upload, Trash2, Image as ImageIcon, ShoppingCart, Eye } from "lucide-react";
+import { Upload, ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useCartStore } from "../store/cartStore";
 import ProductMockup from "../components/ProductMockup";
@@ -188,6 +188,24 @@ function Customize() {
                 </div>
               </div>
 
+              {/* Size Selection */}
+              <div>
+                <h3 className="text-xl font-semibold mb-4">Choose Size</h3>
+                <div className="flex gap-2">
+                  {Object.keys(PRODUCT_SIZES).map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => setProductSize(size as keyof typeof PRODUCT_SIZES)}
+                      className={`px-4 py-2 rounded-lg ${
+                        productSize === size ? "bg-white text-black" : "bg-gray-800"
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Upload Section */}
               <div>
                 <h3 className="text-xl font-semibold mb-4">Upload Design</h3>
@@ -218,18 +236,20 @@ function Customize() {
                     </div>
                     <div className="flex justify-between mb-2">
                       <span>Print Area:</span>
-                      <span>{imageSize.width * imageSize.height} sq. inches</span>
+                      <span>{imageSize.width}in x {imageSize.height}in</span>
                     </div>
-                    <div className="flex justify-between font-bold text-lg">
+                    <div className="flex justify-between font-semibold">
                       <span>Total Price:</span>
                       <span>₹{totalPrice}</span>
                     </div>
                   </div>
+
                   <button
                     onClick={handleAddToCart}
-                    className="w-full bg-white text-black px-6 py-3 rounded-lg hover:bg-gray-200 transition-colors"
+                    className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg flex items-center justify-center gap-2 mt-4"
                   >
-                    <ShoppingCart className="w-5 h-5" /> Add to Cart (₹{totalPrice})
+                    <ShoppingCart />
+                    Add to Cart
                   </button>
                 </>
               )}
